@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+import axios from 'axios';
 import './Login.css'
 import logo from '../logo.svg'
 import { FormGroup, Button } from 'react-bootstrap';
@@ -16,37 +16,31 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    let email = this.refs.inputEmail.value;
-    let pass = this.refs.inputPassword.value;
-    if(!email || !pass) {
-        alert("Plz fill all")
-    }
-
-    $.ajax({
-      url : "https://my-json-server.typicode.com/matti-saemi/fake-json-api/users",
-      method: "POST",
-      data: { email : email, pass : pass },
-      dataType: "json",
-      success : (res) => {
-        console.log(res);
-        if(res.length){
-          this.setState({ loggedInUser:{
-            email : res.email,
-            name : res.name
-          }})
-        }
-
-        console.log(this.state);
-      },
-      error: (err) => {
-        console.log(err)
+      event.preventDefault();
+      let email = this.refs.inputEmail.value;
+      let pass = this.refs.inputPassword.value;
+      if(!email || !pass) {
+          alert("Plz fill all")
       }
-    });
-  }
 
-  signIn(email, password) {
-
+      axios.post('https://my-json-server.typicode.com/typicode/demo/posts', {
+          email: email,
+          pass : pass
+      })
+      .then((response) => {
+          console.log(response);
+          let index = email.search("@");
+          let name = email.substring(0, index);
+          if(response.length){
+              this.setState({ loggedInUser:{
+                  email : email,
+                  name : name
+              }},() => this.props.setLoggedInUser(this.state.loggedInUser))
+          }
+      })
+      .catch((error) => {
+          console.log("Error ", error)
+      })
   }
 
   render() {
