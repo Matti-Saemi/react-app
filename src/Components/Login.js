@@ -8,10 +8,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      loggedInUser : {
-        email : "",
-        name : ""
-      }
+      loggedInUser : {}
     }
   }
 
@@ -28,19 +25,20 @@ class Login extends Component {
           pass : pass
       })
       .then((response) => {
-          console.log(response);
-          let index = email.search("@");
-          let name = email.substring(0, index);
-          if(response.length){
-              this.setState({ loggedInUser:{
-                  email : email,
+          if(response.data) {
+            let index = response.data.email.search("@");
+            let name = response.data.email.substring(0, index);
+              this.setState({
+                loggedInUser : {
+                  email : response.data.email,
                   name : name
-              }},() => this.props.setLoggedInUser(this.state.loggedInUser))
+                }}, () => this.props.setLoggedInUser(this.state.loggedInUser))
           }
       })
       .catch((error) => {
           console.log("Error ", error)
       })
+
   }
 
   render() {
