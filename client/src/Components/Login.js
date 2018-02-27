@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Login.css'
 import logo from '../logo.svg'
 import { FormGroup, Button } from 'react-bootstrap';
+
+import './Login.css'
 
 class Login extends Component {
   constructor() {
@@ -20,19 +21,21 @@ class Login extends Component {
           alert("Plz fill all")
       }
 
-      axios.post('https://my-json-server.typicode.com/typicode/demo/posts', {
+      axios.post(`/api/login`, {
           email: email,
-          pass : pass
+          password : pass
       })
       .then((response) => {
           if(response.data) {
-            let index = response.data.email.search("@");
-            let name = response.data.email.substring(0, index);
-              this.setState({
-                loggedInUser : {
-                  email : response.data.email,
-                  name : name
-                }}, () => this.props.setLoggedInUser(this.state.loggedInUser))
+            let email = response.data.email
+            let name = response.data.name
+            let token = response.data.token
+            this.setState({
+              loggedInUser : {
+                email : email,
+                name : name,
+                token : token
+              }}, () => this.props.setLoggedInUser(this.state.loggedInUser))
           }
       })
       .catch((error) => {
