@@ -44,7 +44,7 @@ class Login extends Component {
   render() {
     return(
       <form className="form-signin" onSubmit={this.handleSubmit.bind(this)}>
-        <img className="mb-4" src={logo} alt="" width="150" height="150" />
+        <img src={logo} alt="" width="150" height="150" />
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
         <FormGroup>
           <input className="form-control" ref="inputEmail" type="email"  placeholder="Email address" required="" autoFocus=""/>

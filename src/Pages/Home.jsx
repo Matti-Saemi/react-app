@@ -6,7 +6,7 @@ class Home extends Component {
   render(){
     return(
       <div>
-        <Login></Login>
+        This is empty
       </div>
     );
   }

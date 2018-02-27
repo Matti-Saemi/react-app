@@ -18,10 +18,12 @@ class Home extends Component {
         return true;
       }
       if (user) {
-          this.setState({ loggedInUser:{
+          this.setState({
+            loggedInUser:{
               email : user.email,
               name : user.name
-          }});
+            }
+          });
           return true;
       }
       return false;
