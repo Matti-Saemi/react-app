@@ -18,20 +18,19 @@ class Login extends Component {
       let pass = this.refs.inputPassword.value;
       if(!email || !pass) {
           alert("Plz fill all")
+          return;
       }
 
-      axios.post('https://my-json-server.typicode.com/typicode/demo/posts', {
+      axios.post('/users', {
           email: email,
           pass : pass
       })
       .then((response) => {
           if(response.data) {
-            let index = response.data.email.search("@");
-            let name = response.data.email.substring(0, index);
               this.setState({
                 loggedInUser : {
                   email : response.data.email,
-                  name : name
+                  name : response.data.name
                 }}, () => this.props.setLoggedInUser(this.state.loggedInUser))
           }
       })

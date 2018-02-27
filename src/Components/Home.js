@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import Login from '../Components/Login';
+import Login from './Login';
+import Header from '../Pages/Header.jsx';
 
 class Home extends Component {
 
   constructor(){
     super();
     this.state = {
-        loggedInUser : {}
+        loggedInUser : {},
+        hasError : false
     }
   }
 
@@ -42,17 +44,19 @@ class Home extends Component {
 
   render() {
       let returnView = <div></div>;
-        if(!this.isLoggedIn()) {
-        returnView = <Login setLoggedInUser={this.handleLogIn.bind(this)}/>;
+      if (!this.isLoggedIn()) {
+          returnView = <Login setLoggedInUser={this.handleLogIn.bind(this)}/>;
       }
       else {
-        returnView = <div className="container">
-          Hello {this.state.loggedInUser.name}
-          <hr/>
-          <div className="btn btn-primary" onClick={this.logOut.bind(this)}>LogOut</div>
-        </div>
+          returnView =
+              <div className="container">
+                  <Header/>
+                  Hello {this.state.loggedInUser.name}
+                  <hr/>
+                  <div className="btn btn-primary" onClick={this.logOut.bind(this)}>LogOut</div>
+              </div>;
+      }
 
-      };
     return(
       <div>
           {returnView}
